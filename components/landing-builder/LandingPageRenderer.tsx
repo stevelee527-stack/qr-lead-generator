@@ -64,10 +64,10 @@ export default function LandingPageRenderer({
             return (
               <section
                 key={section.id}
-                className="py-20 px-4 text-center"
+                className="py-24 px-6 text-center"
                 style={{
                   background: section.content.backgroundImage
-                    ? `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${section.content.backgroundImage})`
+                    ? `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.5)), url(${section.content.backgroundImage})`
                     : `linear-gradient(135deg, ${theme.primaryColor}, ${theme.secondaryColor})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
@@ -75,10 +75,10 @@ export default function LandingPageRenderer({
                 }}
               >
                 <div className="max-w-4xl mx-auto">
-                  <h1 className="text-5xl md:text-6xl font-bold mb-6">
+                  <h1 className="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight leading-tight">
                     {section.content.title}
                   </h1>
-                  <p className="text-xl md:text-2xl opacity-90">
+                  <p className="text-xl md:text-2xl opacity-90 leading-relaxed max-w-2xl mx-auto">
                     {section.content.subtitle}
                   </p>
                 </div>
@@ -89,18 +89,19 @@ export default function LandingPageRenderer({
             return (
               <section
                 key={section.id}
-                className="py-16 px-4 bg-gray-50"
+                className="py-20 px-6"
+                style={{ backgroundColor: '#f5f3ef' }}
               >
-                <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-lg p-8">
+                <div className="max-w-xl mx-auto bg-white rounded-3xl shadow-lg p-10 border border-gray-100">
                   <h2 className="text-3xl font-bold text-center mb-8" style={{ color: theme.primaryColor }}>
                     {section.content.heading}
                   </h2>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-5">
                     {section.content.fields.map((field: any) => (
                       <div key={field.name}>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-xs font-semibold uppercase tracking-wider mb-2" style={{ color: '#9a9082' }}>
                           {field.label}
-                          {field.required && <span className="text-red-500 ml-1">*</span>}
+                          {field.required && <span className="text-red-400 ml-1">*</span>}
                         </label>
                         {field.type === 'textarea' ? (
                           <textarea
@@ -109,7 +110,8 @@ export default function LandingPageRenderer({
                             value={formData[field.name] || ''}
                             onChange={(e) => handleInputChange(field.name, e.target.value)}
                             rows={4}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200"
+                            style={{ focusRingColor: theme.primaryColor } as any}
                           />
                         ) : (
                           <input
@@ -118,7 +120,7 @@ export default function LandingPageRenderer({
                             required={field.required}
                             value={formData[field.name] || ''}
                             onChange={(e) => handleInputChange(field.name, e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200"
                           />
                         )}
                       </div>
@@ -126,7 +128,7 @@ export default function LandingPageRenderer({
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-3 px-6 rounded-md text-white font-semibold transition-colors disabled:opacity-50"
+                      className="w-full py-3.5 px-6 rounded-2xl text-white font-semibold transition-all duration-200 disabled:opacity-50 hover:opacity-90 active:scale-[0.98]"
                       style={{
                         backgroundColor: theme.primaryColor,
                       }}
@@ -140,17 +142,17 @@ export default function LandingPageRenderer({
 
           case 'features':
             return (
-              <section key={section.id} className="py-16 px-4">
+              <section key={section.id} className="py-20 px-6" style={{ backgroundColor: '#fff' }}>
                 <div className="max-w-6xl mx-auto">
-                  <h2 className="text-3xl font-bold text-center mb-12" style={{ color: theme.primaryColor }}>
+                  <h2 className="text-3xl font-bold text-center mb-14" style={{ color: theme.primaryColor }}>
                     {section.content.heading}
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {section.content.features.map((feature: any, idx: number) => (
-                      <div key={idx} className="text-center p-6">
-                        <div className="text-5xl mb-4">{feature.icon}</div>
-                        <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                        <p className="text-gray-600">{feature.description}</p>
+                      <div key={idx} className="text-center p-8 rounded-3xl bg-gray-50 border border-gray-100">
+                        <div className="text-5xl mb-5">{feature.icon}</div>
+                        <h3 className="text-xl font-bold mb-3" style={{ color: '#332e28' }}>{feature.title}</h3>
+                        <p className="text-gray-500 leading-relaxed">{feature.description}</p>
                       </div>
                     ))}
                   </div>
@@ -162,10 +164,10 @@ export default function LandingPageRenderer({
             return (
               <footer
                 key={section.id}
-                className="py-8 px-4 text-center text-white"
-                style={{ backgroundColor: theme.secondaryColor }}
+                className="py-10 px-6 text-center"
+                style={{ backgroundColor: '#332e28', color: '#d5cfc4' }}
               >
-                <p>{section.content.text}</p>
+                <p className="text-sm">{section.content.text}</p>
               </footer>
             );
 

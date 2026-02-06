@@ -2,26 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #f5f3ef;
+  --foreground: #332e28;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-white rounded-3xl shadow-soft p-6 border border-sand-100;
+  }
+
+  .card-hover {
+    @apply card transition-all duration-300 hover:shadow-soft-md hover:-translate-y-0.5;
+  }
+
+  .stat-value {
+    @apply text-4xl font-bold tracking-tight text-sand-900;
+  }
+
+  .stat-label {
+    @apply text-sm font-medium text-sand-500 uppercase tracking-wider;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-sand-900 text-white rounded-2xl font-semibold transition-all duration-200 hover:bg-sand-800 hover:shadow-soft-md active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 bg-white text-sand-800 rounded-2xl font-semibold border border-sand-200 transition-all duration-200 hover:bg-sand-50 hover:border-sand-300 hover:shadow-soft active:scale-[0.98];
+  }
+
+  .btn-accent {
+    @apply px-6 py-3 bg-accent text-white rounded-2xl font-semibold transition-all duration-200 hover:bg-accent-dark hover:shadow-soft-md active:scale-[0.98];
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-sand-50 border border-sand-200 rounded-2xl text-sand-800 placeholder-sand-400 focus:outline-none focus:ring-2 focus:ring-accent-muted focus:border-accent transition-all duration-200;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  }
+
+  .badge-success {
+    @apply badge bg-emerald-50 text-emerald-700 border border-emerald-200;
+  }
+
+  .badge-warning {
+    @apply badge bg-amber-50 text-amber-700 border border-amber-200;
+  }
+
+  .badge-info {
+    @apply badge bg-sky-50 text-sky-700 border border-sky-200;
   }
 }

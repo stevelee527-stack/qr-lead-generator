@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Download, Copy, Check } from 'lucide-react';
+import { Download, Copy, Check, Eye } from 'lucide-react';
 
 interface QRCodeDisplayProps {
   qrCode: {
@@ -32,24 +32,28 @@ export default function QRCodeDisplay({ qrCode }: QRCodeDisplayProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
-      <div className="flex justify-between items-start mb-4">
+    <div className="card-hover">
+      <div className="flex justify-between items-start mb-5">
         <div>
-          <h3 className="text-lg font-semibold text-gray-900">{qrCode.name}</h3>
-          <p className="text-sm text-gray-500 mt-1">Scans: {qrCode.scans}</p>
+          <h3 className="text-lg font-semibold text-sand-900">{qrCode.name}</h3>
+          <div className="flex items-center gap-2 mt-1.5">
+            <Eye className="w-3.5 h-3.5 text-sand-400" />
+            <span className="text-sm text-sand-500">{qrCode.scans} scans</span>
+          </div>
         </div>
+        <span className="badge-success">Active</span>
       </div>
 
-      <div className="flex justify-center mb-4 bg-gray-50 p-4 rounded">
+      <div className="flex justify-center mb-5 bg-sand-50 p-6 rounded-2xl">
         <img
           src={qrCode.imageUrl}
           alt={qrCode.name}
-          className="w-64 h-64"
+          className="w-56 h-56"
         />
       </div>
 
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="mb-5">
+        <label className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
           Landing Page URL
         </label>
         <div className="flex gap-2">
@@ -57,17 +61,17 @@ export default function QRCodeDisplay({ qrCode }: QRCodeDisplayProps) {
             type="text"
             value={qrCode.url}
             readOnly
-            className="flex-1 px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-sm"
+            className="flex-1 px-4 py-2.5 bg-sand-50 border border-sand-200 rounded-xl text-sm text-sand-700"
           />
           <button
             onClick={handleCopyUrl}
-            className="px-3 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition-colors"
+            className="px-3 py-2.5 bg-sand-50 hover:bg-sand-100 border border-sand-200 rounded-xl transition-all duration-200"
             title="Copy URL"
           >
             {copied ? (
-              <Check className="w-4 h-4 text-green-600" />
+              <Check className="w-4 h-4 text-emerald-600" />
             ) : (
-              <Copy className="w-4 h-4 text-gray-600" />
+              <Copy className="w-4 h-4 text-sand-600" />
             )}
           </button>
         </div>
@@ -75,7 +79,7 @@ export default function QRCodeDisplay({ qrCode }: QRCodeDisplayProps) {
 
       <button
         onClick={handleDownload}
-        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+        className="btn-primary w-full flex items-center justify-center gap-2"
       >
         <Download className="w-4 h-4" />
         Download QR Code

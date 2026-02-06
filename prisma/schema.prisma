@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  campaigns Campaign[]
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  qrCodes      QRCode[]
+  landingPages LandingPage[]
+  leads        Lead[]
+}
+
+model QRCode {
+  id         String   @id @default(cuid())
+  campaignId String
+  name       String
+  url        String
+  imageUrl   String?
+  scans      Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  
+  @@index([campaignId])
+}
+
+model LandingPage {
+  id          String   @id @default(cuid())
+  campaignId  String
+  name        String
+  slug        String   @unique
+  content     Json     // Store page structure as JSON
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  leads    Lead[]
+  
+  @@index([campaignId])
+  @@index([slug])
+}
+
+model Lead {
+  id            String   @id @default(cuid())
+  campaignId    String
+  landingPageId String?
+  email         String
+  name          String?
+  phone         String?
+  message       String?
+  metadata      Json?    // Additional form fields
+  source        String?  // QR code, direct link, etc.
+  isContacted   Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  
+  campaign    Campaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  landingPage LandingPage? @relation(fields: [landingPageId], references: [id], onDelete: SetNull)
+  
+  @@index([campaignId])
+  @@index([landingPageId])
+  @@index([email])
+  @@index([createdAt])
+}

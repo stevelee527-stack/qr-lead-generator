@@ -39,8 +39,13 @@ export async function generateStyledQRCode(options: QRCodeOptions): Promise<stri
   });
 
   // Generate blob and convert to data URL
-  const blob = await qrCode.getRawData('png');
-  if (!blob) throw new Error('Failed to generate QR code');
+  const rawData = await qrCode.getRawData('png');
+  if (!rawData) throw new Error('Failed to generate QR code');
+
+  // Ensure we have a Blob (getRawData may return Buffer in Node environments)
+  const blob: Blob = rawData instanceof Blob
+    ? rawData
+    : new Blob([new Uint8Array(rawData)], { type: 'image/png' });
 
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

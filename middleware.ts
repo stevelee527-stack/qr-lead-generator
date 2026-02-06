@@ -60,6 +60,7 @@ function handleUnauthorized(request: NextRequest, pathname: string) {
 
 export const config = {
   matcher: [
+    '/',
     '/dashboard/:path*',
     '/admin/login',
     '/api/campaigns/:path*',

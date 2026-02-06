@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { QrCode, Layout, BarChart3, Users, ArrowRight, Plus, Activity, Search, User, Home } from 'lucide-react';
+import { QrCode, Layout, BarChart3, Users, ArrowRight, Plus, Activity, Search } from 'lucide-react';
+import LogoutButton from '@/components/LogoutButton';
 
 export default function Dashboard() {
   return (
@@ -23,9 +24,7 @@ export default function Dashboard() {
             <button className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-soft border border-sand-100 hover:shadow-soft-md transition-all">
               <Search className="w-4 h-4 text-sand-600" />
             </button>
-            <div className="w-10 h-10 bg-sand-900 rounded-xl flex items-center justify-center">
-              <User className="w-4 h-4 text-white" />
-            </div>
+            <LogoutButton />
           </div>
         </div>
       </nav>

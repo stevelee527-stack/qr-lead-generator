@@ -25,13 +25,24 @@ export default function LandingPageRenderer({
     setIsSubmitting(true);
 
     try {
+      // Separate standard fields from metadata fields
+      const { name, email, phone, address, windowCount, message, ...otherFields } = formData;
+
       const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           campaignId,
           landingPageId,
-          ...formData,
+          name,
+          email,
+          phone,
+          address,
+          message,
+          metadata: {
+            windowCount,
+            ...otherFields,
+          },
           source: 'landing_page',
         }),
       });
@@ -113,6 +124,27 @@ export default function LandingPageRenderer({
                             className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:border-transparent transition-all duration-200"
                             style={{ focusRingColor: theme.primaryColor } as any}
                           />
+                        ) : field.type === 'radio' ? (
+                          <div className="space-y-3">
+                            {field.options?.map((option: any) => (
+                              <label
+                                key={option.value}
+                                className="flex items-center p-3 bg-gray-50 border border-gray-200 rounded-2xl cursor-pointer hover:bg-gray-100 transition-all duration-200"
+                              >
+                                <input
+                                  type="radio"
+                                  name={field.name}
+                                  value={option.value}
+                                  required={field.required}
+                                  checked={formData[field.name] === option.value}
+                                  onChange={(e) => handleInputChange(field.name, e.target.value)}
+                                  className="mr-3 w-4 h-4"
+                                  style={{ accentColor: theme.primaryColor }}
+                                />
+                                <span className="text-gray-700 font-medium">{option.label}</span>
+                              </label>
+                            ))}
+                          </div>
                         ) : (
                           <input
                             type={field.type}

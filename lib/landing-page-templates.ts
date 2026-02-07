@@ -19,8 +19,8 @@ export const defaultLandingPage: LandingPageContent = {
       id: 'hero-1',
       type: 'hero',
       content: {
-        title: 'Transform Your Space',
-        subtitle: 'Professional design consultation for your dream home',
+        title: 'Custom Window Treatments for Your Home',
+        subtitle: 'Free In-Home Consultation • We Bring the Showroom to You',
         backgroundImage: '',
       },
     },
@@ -28,14 +28,25 @@ export const defaultLandingPage: LandingPageContent = {
       id: 'form-1',
       type: 'form',
       content: {
-        heading: 'Get Your Free Consultation',
+        heading: 'Schedule Your Free Consultation',
         fields: [
           { name: 'name', label: 'Full Name', type: 'text', required: true },
-          { name: 'email', label: 'Email', type: 'email', required: true },
-          { name: 'phone', label: 'Phone Number', type: 'tel', required: false },
-          { name: 'message', label: 'Tell us about your project', type: 'textarea', required: false },
+          { name: 'address', label: 'Address', type: 'text', required: true },
+          { name: 'phone', label: 'Phone Number', type: 'tel', required: true },
+          { name: 'email', label: 'Email Address', type: 'email', required: true },
+          {
+            name: 'windowCount',
+            label: 'How many windows do you have?',
+            type: 'radio',
+            required: true,
+            options: [
+              { value: '1-5', label: '1-5 windows' },
+              { value: '5-10', label: '5-10 windows' },
+              { value: '10+', label: '10+ windows' }
+            ]
+          },
         ],
-        submitText: 'Request Consultation',
+        submitText: 'Request Free Consultation',
       },
     },
     {
@@ -45,19 +56,19 @@ export const defaultLandingPage: LandingPageContent = {
         heading: 'Why Choose Us',
         features: [
           {
-            icon: '✨',
-            title: 'Expert Design',
-            description: '20+ years of experience in interior design',
+            icon: '🏠',
+            title: 'In-Home Service',
+            description: 'We bring our showroom to you for a convenient, pressure-free consultation',
           },
           {
-            icon: '🎨',
-            title: 'Custom Solutions',
-            description: 'Tailored designs for your unique style',
+            icon: '✂️',
+            title: 'Custom Made',
+            description: 'Blinds, shades, shutters, and draperies crafted to your exact specifications',
           },
           {
-            icon: '⚡',
-            title: 'Fast Turnaround',
-            description: 'Quick consultations and project delivery',
+            icon: '🔧',
+            title: 'Full Service',
+            description: 'Professional measuring, manufacturing, and installation - all included',
           },
         ],
       },
@@ -66,13 +77,13 @@ export const defaultLandingPage: LandingPageContent = {
       id: 'footer-1',
       type: 'footer',
       content: {
-        text: '© 2026 Design Consultants. All rights reserved.',
+        text: '© 2026 Custom Window Treatments. 40 Years of Excellence.',
       },
     },
   ],
   theme: {
-    primaryColor: '#3b82f6',
-    secondaryColor: '#1e40af',
+    primaryColor: '#8b4513',
+    secondaryColor: '#654321',
     fontFamily: 'Inter, sans-serif',
   },
 };

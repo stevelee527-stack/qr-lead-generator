@@ -9,6 +9,7 @@ const createLeadSchema = z.object({
   email: z.string().email(),
   name: z.string().optional(),
   phone: z.string().optional(),
+  address: z.string().optional(),
   message: z.string().optional(),
   source: z.string().optional(),
   metadata: z.any().optional(),
@@ -30,15 +31,17 @@ export async function POST(request: NextRequest) {
 
     // Send email notification to consultant
     const consultantEmail = process.env.CONSULTANT_EMAIL;
-    
+
     if (consultantEmail) {
       const emailContent = createLeadNotificationEmail({
         name: lead.name || undefined,
         email: lead.email,
         phone: lead.phone || undefined,
+        address: lead.address || undefined,
         message: lead.message || undefined,
         campaignName: lead.campaign.name,
         landingPageName: lead.landingPage?.name,
+        metadata: lead.metadata,
       });
 
       await sendEmail({
@@ -50,7 +53,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(lead);
   } catch (error) {
     console.error('Error creating lead:', error);
-    
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid request data', details: error.errors },

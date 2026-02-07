@@ -79,8 +79,9 @@ model Lead {
   email         String
   name          String?
   phone         String?
+  address       String?  // Customer address for in-home consultation
   message       String?
-  metadata      Json?    // Additional form fields
+  metadata      Json?    // Additional form fields (e.g., windowCount)
   source        String?  // QR code, direct link, etc.
   isContacted   Boolean  @default(false)
   createdAt     DateTime @default(now())

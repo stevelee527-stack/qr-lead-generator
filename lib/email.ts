@@ -35,9 +35,11 @@ export function createLeadNotificationEmail(lead: {
   name?: string;
   email: string;
   phone?: string;
+  address?: string;
   message?: string;
   campaignName: string;
   landingPageName?: string;
+  metadata?: any;
 }) {
   return {
     subject: `🔔 New Lead: ${lead.name || lead.email}`,
@@ -90,6 +92,20 @@ export function createLeadNotificationEmail(lead: {
               <div class="field">
                 <div class="label">Phone</div>
                 <div class="value"><a href="tel:${lead.phone}">${lead.phone}</a></div>
+              </div>
+              ` : ''}
+              
+              ${lead.address ? `
+              <div class="field">
+                <div class="label">Address</div>
+                <div class="value">${lead.address}</div>
+              </div>
+              ` : ''}
+              
+              ${lead.metadata?.windowCount ? `
+              <div class="field">
+                <div class="label">Window Count</div>
+                <div class="value">${lead.metadata.windowCount} windows</div>
               </div>
               ` : ''}
               

@@ -12,14 +12,20 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { email, password } = loginSchema.parse(body);
 
-    if (!verifyCredentials(email, password)) {
+    const user = await verifyCredentials(email, password);
+
+    if (!user) {
       return NextResponse.json(
         { error: 'Invalid email or password' },
         { status: 401 }
       );
     }
 
-    const token = await createToken(email);
+    const token = await createToken({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
     const response = NextResponse.json({ success: true });
     response.cookies.set(COOKIE_NAME, token, {

@@ -34,27 +34,22 @@ type AuthUser = {
 };
 
 export async function verifyCredentials(email: string, password: string): Promise<AuthUser | null> {
-  const { PrismaClient } = await import('@prisma/client');
-  const prisma = new PrismaClient();
-  const bcrypt = await import('bcryptjs');
+  const adminEmail = process.env.ADMIN_EMAIL;
+  const adminPassword = process.env.ADMIN_PASSWORD;
 
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
-
-  if (!user) {
+  if (!adminEmail || !adminPassword) {
+    console.error('ADMIN_EMAIL or ADMIN_PASSWORD environment variables are not set');
     return null;
   }
 
-  const isValid = await bcrypt.compare(password, user.password);
-
-  if (!isValid) {
+  // Compare credentials against env vars (case-insensitive email check)
+  if (email.toLowerCase() !== adminEmail.toLowerCase() || password !== adminPassword) {
     return null;
   }
 
   return {
-    id: user.id,
-    email: user.email,
-    role: user.role,
+    id: 'admin',
+    email: adminEmail,
+    role: 'ADMIN',
   };
 }

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,29 +8,27 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String     @id @default(cuid())
+  email     String     @unique
   name      String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   password  String
-  role      String   @default("USER")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
+  role      String     @default("USER")
   campaigns Campaign[]
 }
 
 model Campaign {
-  id          String   @id @default(cuid())
-  name        String
-  description String?
-  userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
+  id           String        @id @default(cuid())
+  name         String
+  description  String?
+  userId       String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  qrCodes      QRCode[]
   landingPages LandingPage[]
   leads        Lead[]
+  qrCodes      QRCode[]
 }
 
 model QRCode {
@@ -44,13 +39,12 @@ model QRCode {
   imageUrl   String?
   scans      Int      @default(0)
   isActive   Boolean  @default(true)
-  vehicleId  String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  
-  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  vehicle  Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
-  
+  vehicleId  String?
+  campaign   Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  vehicle    Vehicle? @relation(fields: [vehicleId], references: [id])
+
   @@index([campaignId])
   @@index([vehicleId])
 }
@@ -60,35 +54,33 @@ model LandingPage {
   campaignId  String
   name        String
   slug        String   @unique
-  content     Json     // Store page structure as JSON
+  content     Json
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
-  campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  leads    Lead[]
-  
+  campaign    Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  leads       Lead[]
+
   @@index([campaignId])
   @@index([slug])
 }
 
 model Lead {
-  id            String   @id @default(cuid())
+  id            String       @id @default(cuid())
   campaignId    String
   landingPageId String?
   email         String
   name          String?
   phone         String?
-  address       String?  // Customer address for in-home consultation
   message       String?
-  metadata      Json?    // Additional form fields (e.g., windowCount)
-  source        String?  // QR code, direct link, etc.
-  isContacted   Boolean  @default(false)
-  createdAt     DateTime @default(now())
-  
-  campaign    Campaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
-  landingPage LandingPage? @relation(fields: [landingPageId], references: [id], onDelete: SetNull)
-  
+  metadata      Json?
+  source        String?
+  isContacted   Boolean      @default(false)
+  createdAt     DateTime     @default(now())
+  address       String?
+  campaign      Campaign     @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  landingPage   LandingPage? @relation(fields: [landingPageId], references: [id])
+
   @@index([campaignId])
   @@index([landingPageId])
   @@index([email])
@@ -96,26 +88,24 @@ model Lead {
 }
 
 model DesignConsultant {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
-  email     String   @unique
+  email     String    @unique
   phone     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   vehicles  Vehicle[]
 }
 
 model Vehicle {
-  id            String   @id @default(cuid())
-  tagNumber     String   @unique
+  id            String           @id @default(cuid())
+  tagNumber     String           @unique
   vehicleNumber String
   consultantId  String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  
-  consultant DesignConsultant @relation(fields: [consultantId], references: [id], onDelete: Cascade)
-  qrCodes    QRCode[]
-  
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+  qrCodes       QRCode[]
+  consultant    DesignConsultant @relation(fields: [consultantId], references: [id], onDelete: Cascade)
+
   @@index([consultantId])
 }

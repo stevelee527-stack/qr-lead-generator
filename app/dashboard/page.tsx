@@ -37,10 +37,10 @@ export default function Dashboard() {
               <h1 className="text-3xl font-extrabold text-sand-900 tracking-tight">Dashboard</h1>
               <p className="text-sand-500 mt-1">Manage your campaigns, QR codes, and leads</p>
             </div>
-            <button className="btn-primary flex items-center gap-2">
+            <Link href="/dashboard/campaigns/new" className="btn-primary flex items-center gap-2">
               <Plus className="w-4 h-4" />
               <span className="hidden sm:inline">New Campaign</span>
-            </button>
+            </Link>
           </div>
 
           {/* Stat Cards */}

@@ -42,12 +42,15 @@ model QRCode {
   imageUrl   String?
   scans      Int      @default(0)
   isActive   Boolean  @default(true)
+  vehicleId  String?
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   
   campaign Campaign @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+  vehicle  Vehicle? @relation(fields: [vehicleId], references: [id], onDelete: SetNull)
   
   @@index([campaignId])
+  @@index([vehicleId])
 }
 
 model LandingPage {
@@ -87,4 +90,29 @@ model Lead {
   @@index([landingPageId])
   @@index([email])
   @@index([createdAt])
+}
+
+model DesignConsultant {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  vehicles  Vehicle[]
+}
+
+model Vehicle {
+  id            String   @id @default(cuid())
+  tagNumber     String   @unique
+  vehicleNumber String
+  consultantId  String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  consultant DesignConsultant @relation(fields: [consultantId], references: [id], onDelete: Cascade)
+  qrCodes    QRCode[]
+  
+  @@index([consultantId])
 }

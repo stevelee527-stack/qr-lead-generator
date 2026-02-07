@@ -7,12 +7,13 @@ const createQRSchema = z.object({
   campaignId: z.string(),
   name: z.string().min(1),
   landingPageSlug: z.string().optional(),
+  vehicleId: z.string().optional(),
 });
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { campaignId, name, landingPageSlug } = createQRSchema.parse(body);
+    const { campaignId, name, landingPageSlug, vehicleId } = createQRSchema.parse(body);
 
     // Verify campaign exists
     const campaign = await prisma.campaign.findUnique({
@@ -42,13 +43,14 @@ export async function POST(request: NextRequest) {
         name,
         url: targetUrl,
         imageUrl: qrCodeDataUrl,
+        vehicleId: vehicleId || null,
       },
     });
 
     return NextResponse.json(qrCode);
   } catch (error) {
     console.error('Error creating QR code:', error);
-    
+
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         { error: 'Invalid request data', details: error.errors },

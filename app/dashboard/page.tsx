@@ -110,6 +110,32 @@ export default function Dashboard() {
                     <ArrowRight className="w-5 h-5 text-sand-400 group-hover:text-accent group-hover:translate-x-1 transition-all" />
                   </Link>
 
+                  <Link href="/dashboard/consultants" className="flex items-center justify-between p-4 bg-sand-50 hover:bg-warm-100 rounded-2xl transition-all duration-200 group">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-amber-600 rounded-xl flex items-center justify-center">
+                        <Users className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sand-800 group-hover:text-sand-900">Manage Consultants</div>
+                        <div className="text-sm text-sand-500">Add or edit design consultants</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-sand-400 group-hover:text-accent group-hover:translate-x-1 transition-all" />
+                  </Link>
+
+                  <Link href="/dashboard/vehicles" className="flex items-center justify-between p-4 bg-sand-50 hover:bg-warm-100 rounded-2xl transition-all duration-200 group">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center">
+                        <Activity className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sand-800 group-hover:text-sand-900">Manage Vehicles</div>
+                        <div className="text-sm text-sand-500">Track vehicles and assignments</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-sand-400 group-hover:text-accent group-hover:translate-x-1 transition-all" />
+                  </Link>
+
                   <Link href="/dashboard/qr/new" className="flex items-center justify-between p-4 bg-sand-50 hover:bg-warm-100 rounded-2xl transition-all duration-200 group">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-sand-900 rounded-xl flex items-center justify-center">

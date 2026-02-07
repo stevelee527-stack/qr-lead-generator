@@ -33,25 +33,9 @@ export default function Home() {
       {/* Main Content */}
       <main className="px-6 lg:px-10 pb-12">
         <div className="max-w-7xl mx-auto">
-          {/* Top Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-6">
-            {/* Title + Progress */}
-            <div className="lg:col-span-3 flex flex-col justify-between gap-6">
-              <div>
-                <h1 className="text-5xl lg:text-6xl font-extrabold text-sand-900 leading-[1.05] tracking-tight mb-4">
-                  Lead<br />Generation
-                </h1>
-                <p className="text-sand-500 text-base leading-relaxed">
-                  Create dynamic QR codes, build landing pages, and capture leads with real-time notifications.
-                </p>
-              </div>
-
-              {/* Progress Ring Card */}
-              {/* Progress Ring Card - REMOVED */}
-            </div>
-
-            {/* Central Stats Card */}
-            <div className="lg:col-span-5">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            {/* Central Stats Card - Moved to col-span-8 */}
+            <div className="lg:col-span-8">
               <div className="card h-full">
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-lg font-semibold text-sand-800">Campaign Overview</h2>
@@ -74,7 +58,7 @@ export default function Home() {
                 </div>
 
                 {/* Chart */}
-                <div className="relative h-44 bg-sand-50 rounded-2xl overflow-hidden">
+                <div className="relative h-64 bg-sand-50 rounded-2xl overflow-hidden">
                   <svg className="w-full h-full" viewBox="0 0 400 160" preserveAspectRatio="none">
                     <defs>
                       <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
@@ -99,16 +83,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* QR Preview Card */}
-            {/* QR Preview Card - REMOVED */}
-          </div>
-
-          {/* Bottom Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Quick Actions */}
-            {/* Quick Actions - REMOVED */}
-
-            {/* Recent Leads */}
+            {/* Recent Leads - Kept as col-span-4 */}
             <div className="lg:col-span-4">
               <div className="card h-full">
                 <div className="flex items-center justify-between mb-6">

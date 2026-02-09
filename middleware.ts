@@ -3,7 +3,7 @@ import { verifyToken, COOKIE_NAME } from '@/lib/auth';
 
 const PUBLIC_API_PATTERNS = [
   /^\/api\/leads$/,
-  /^\/api\/qr\/[^/]+\/scan$/,
+  /^\/api\/vehicles\/[^/]+$/,
 ];
 
 function isPublicApiRoute(pathname: string): boolean {
@@ -25,7 +25,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Skip auth for public API routes (lead submissions + QR scan tracking)
+  // Skip auth for public API routes (lead submissions + vehicle info)
   if (isPublicApiRoute(pathname)) {
     return NextResponse.next();
   }
@@ -63,8 +63,8 @@ export const config = {
     '/',
     '/dashboard/:path*',
     '/admin/login',
-    '/api/campaigns/:path*',
-    '/api/qr/:path*',
-    '/api/landing-pages/:path*',
+    '/api/consultants/:path*',
+    '/api/vehicles/:path*',
+    '/api/leads',
   ],
 };

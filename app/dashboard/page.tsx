@@ -18,8 +18,7 @@ interface Vehicle {
   year: number;
   make: string;
   model: string;
-  vin: string | null;
-  stockNumber: string | null;
+  vehicleNumber: string | null;
   qrCodeUrl: string | null;
   consultantId: string;
   consultant: { id: string; name: string; email: string };
@@ -51,7 +50,7 @@ export default function Dashboard() {
   const [showAddDC, setShowAddDC] = useState(false);
   const [showAddVehicle, setShowAddVehicle] = useState(false);
   const [dcForm, setDcForm] = useState({ name: '', email: '', phone: '' });
-  const [vehicleForm, setVehicleForm] = useState({ year: '', make: '', model: '', vin: '', stockNumber: '', consultantId: '' });
+  const [vehicleForm, setVehicleForm] = useState({ year: '', make: '', model: '', vehicleNumber: '', consultantId: '' });
   const [submitting, setSubmitting] = useState(false);
 
   // Section collapse states
@@ -116,13 +115,12 @@ export default function Dashboard() {
           year: parseInt(vehicleForm.year),
           make: vehicleForm.make,
           model: vehicleForm.model,
-          vin: vehicleForm.vin || undefined,
-          stockNumber: vehicleForm.stockNumber || undefined,
+          vehicleNumber: vehicleForm.vehicleNumber || undefined,
           consultantId: vehicleForm.consultantId,
         }),
       });
       if (res.ok) {
-        setVehicleForm({ year: '', make: '', model: '', vin: '', stockNumber: '', consultantId: '' });
+        setVehicleForm({ year: '', make: '', model: '', vehicleNumber: '', consultantId: '' });
         setShowAddVehicle(false);
         fetchData();
       }
@@ -280,8 +278,7 @@ export default function Dashboard() {
                   <input type="number" placeholder="Year" required value={vehicleForm.year} onChange={e => setVehicleForm({ ...vehicleForm, year: e.target.value })} className="input-field" />
                   <input type="text" placeholder="Make" required value={vehicleForm.make} onChange={e => setVehicleForm({ ...vehicleForm, make: e.target.value })} className="input-field" />
                   <input type="text" placeholder="Model" required value={vehicleForm.model} onChange={e => setVehicleForm({ ...vehicleForm, model: e.target.value })} className="input-field" />
-                  <input type="text" placeholder="VIN (optional)" value={vehicleForm.vin} onChange={e => setVehicleForm({ ...vehicleForm, vin: e.target.value })} className="input-field" />
-                  <input type="text" placeholder="Stock # (optional)" value={vehicleForm.stockNumber} onChange={e => setVehicleForm({ ...vehicleForm, stockNumber: e.target.value })} className="input-field" />
+                  <input type="text" placeholder="Vehicle # (optional)" value={vehicleForm.vehicleNumber} onChange={e => setVehicleForm({ ...vehicleForm, vehicleNumber: e.target.value })} className="input-field" />
                   <select required value={vehicleForm.consultantId} onChange={e => setVehicleForm({ ...vehicleForm, consultantId: e.target.value })} className="input-field">
                     <option value="">Assign DC...</option>
                     {consultants.map(dc => (
@@ -318,8 +315,7 @@ export default function Dashboard() {
                           <div className="font-semibold text-sand-800">{v.year} {v.make} {v.model}</div>
                           <div className="text-sm text-sand-500">
                             DC: {v.consultant.name}
-                            {v.stockNumber ? ` | Stock: ${v.stockNumber}` : ''}
-                            {v.vin ? ` | VIN: ${v.vin}` : ''}
+                            {v.vehicleNumber ? ` | Vehicle #: ${v.vehicleNumber}` : ''}
                           </div>
                         </div>
                       </div>

@@ -7,8 +7,7 @@ const createVehicleSchema = z.object({
   year: z.number().int().min(1900).max(2100),
   make: z.string().min(1),
   model: z.string().min(1),
-  vin: z.string().optional(),
-  stockNumber: z.string().optional(),
+  vehicleNumber: z.string().optional(),
   consultantId: z.string().min(1),
 });
 

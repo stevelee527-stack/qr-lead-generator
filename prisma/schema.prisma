@@ -22,8 +22,7 @@ model Vehicle {
   year         Int
   make         String
   model        String
-  vin          String?
-  stockNumber  String?
+  vehicleNumber String?
   consultantId String
   qrCodeUrl    String?
   createdAt    DateTime @default(now())

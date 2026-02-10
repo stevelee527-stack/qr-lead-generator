@@ -36,10 +36,11 @@ export async function POST(request: NextRequest) {
     const vehicle = await prisma.vehicle.create({ data });
 
     // Generate QR code pointing to the public lead form
-    const appUrl =
+    const appUrl = (
       process.env.NEXT_PUBLIC_APP_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-    const vehicleUrl = `${appUrl}/vehicle/${vehicle.id}`;
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+    ).trim();
+    const vehicleUrl = `${appUrl}/vehicle/${vehicle.id}`.trim();
     const qrCodeUrl = await generateSimpleQRCode(vehicleUrl);
 
     // Update vehicle with QR code

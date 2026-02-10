@@ -38,7 +38,10 @@ model Lead {
   name        String
   email       String
   phone       String
-  address     String
+  street      String
+  city        String
+  state       String
+  zip         String
   windowCount String
   message     String?
   vehicleId   String

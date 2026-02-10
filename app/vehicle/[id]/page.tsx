@@ -57,7 +57,10 @@ export default function VehicleLandingPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [zip, setZip] = useState('');
   const [windowCount, setWindowCount] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -82,7 +85,7 @@ export default function VehicleLandingPage() {
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ vehicleId, name, email, phone, address, windowCount }),
+        body: JSON.stringify({ vehicleId, name, email, phone, street, city, state, zip, windowCount }),
       });
 
       if (!res.ok) {
@@ -294,18 +297,65 @@ export default function VehicleLandingPage() {
             </div>
 
             <div>
-              <label htmlFor="address" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
-                Address
+              <label htmlFor="street" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
+                Street Address
               </label>
               <div className="relative">
                 <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-sand-400" />
                 <input
-                  id="address"
+                  id="street"
                   type="text"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  value={street}
+                  onChange={(e) => setStreet(e.target.value)}
                   className="input-field pl-11"
-                  placeholder="123 Main St, City, State"
+                  placeholder="123 Main St"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <label htmlFor="city" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
+                  City
+                </label>
+                <input
+                  id="city"
+                  type="text"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className="input-field"
+                  placeholder="Tampa"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="state" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
+                  State
+                </label>
+                <input
+                  id="state"
+                  type="text"
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  className="input-field"
+                  placeholder="FL"
+                  maxLength={2}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="zip" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
+                  Zip
+                </label>
+                <input
+                  id="zip"
+                  type="text"
+                  value={zip}
+                  onChange={(e) => setZip(e.target.value)}
+                  className="input-field"
+                  placeholder="33601"
+                  maxLength={10}
                   required
                 />
               </div>

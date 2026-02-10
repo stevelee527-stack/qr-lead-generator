@@ -8,7 +8,10 @@ const createLeadSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   phone: z.string().min(1),
-  address: z.string().min(1),
+  street: z.string().min(1),
+  city: z.string().min(1),
+  state: z.string().min(1),
+  zip: z.string().min(1),
   windowCount: z.enum(['1-5', '5-10', '10+']),
   message: z.string().optional(),
 });

@@ -30,7 +30,10 @@ interface Lead {
   name: string;
   email: string;
   phone: string;
-  address: string;
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
   windowCount: string;
   message: string | null;
   createdAt: string;
@@ -365,7 +368,7 @@ export default function Dashboard() {
                         {lead.email} | {lead.phone}
                       </div>
                       <div className="text-sm text-sand-500 mt-0.5">
-                        {lead.address}
+                        {lead.street}, {lead.city}, {lead.state} {lead.zip}
                       </div>
                       <div className="flex items-center gap-3 mt-1">
                         <span className="text-xs font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full">

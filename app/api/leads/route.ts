@@ -7,7 +7,9 @@ const createLeadSchema = z.object({
   vehicleId: z.string().min(1),
   name: z.string().min(1),
   email: z.string().email(),
-  phone: z.string().optional(),
+  phone: z.string().min(1),
+  address: z.string().min(1),
+  windowCount: z.enum(['1-5', '5-10', '10+']),
   message: z.string().optional(),
 });
 

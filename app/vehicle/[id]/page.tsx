@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import {
   Sun, EyeOff, PanelTop, Grip,
-  User, Mail, Phone, MessageSquare,
+  User, Mail, Phone, MapPin, LayoutGrid,
   CheckCircle, Loader2, Shield, Star, Wrench,
   ArrowDown, Sparkles
 } from 'lucide-react';
@@ -57,7 +57,8 @@ export default function VehicleLandingPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [message, setMessage] = useState('');
+  const [address, setAddress] = useState('');
+  const [windowCount, setWindowCount] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -81,7 +82,7 @@ export default function VehicleLandingPage() {
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ vehicleId, name, email, phone: phone || undefined, message: message || undefined }),
+        body: JSON.stringify({ vehicleId, name, email, phone, address, windowCount }),
       });
 
       if (!res.ok) {
@@ -276,7 +277,7 @@ export default function VehicleLandingPage() {
 
             <div>
               <label htmlFor="phone" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
-                Phone (optional)
+                Phone
               </label>
               <div className="relative">
                 <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-sand-400" />
@@ -287,24 +288,47 @@ export default function VehicleLandingPage() {
                   onChange={(e) => setPhone(e.target.value)}
                   className="input-field pl-11"
                   placeholder="(555) 123-4567"
+                  required
                 />
               </div>
             </div>
 
             <div>
-              <label htmlFor="message" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
-                Tell us about your project (optional)
+              <label htmlFor="address" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
+                Address
               </label>
               <div className="relative">
-                <MessageSquare className="absolute left-4 top-3 w-4 h-4 text-sand-400" />
-                <textarea
-                  id="message"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  className="input-field pl-11 min-h-[80px] resize-none"
-                  placeholder="Number of windows, room types, style preferences..."
-                  rows={3}
+                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-sand-400" />
+                <input
+                  id="address"
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  className="input-field pl-11"
+                  placeholder="123 Main St, City, State"
+                  required
                 />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="windowCount" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
+                Number of Windows
+              </label>
+              <div className="relative">
+                <LayoutGrid className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-sand-400" />
+                <select
+                  id="windowCount"
+                  value={windowCount}
+                  onChange={(e) => setWindowCount(e.target.value)}
+                  className="input-field pl-11 appearance-none cursor-pointer"
+                  required
+                >
+                  <option value="" disabled>Select number of windows</option>
+                  <option value="1-5">1 - 5</option>
+                  <option value="5-10">5 - 10</option>
+                  <option value="10+">10+</option>
+                </select>
               </div>
             </div>
 

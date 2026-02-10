@@ -29,7 +29,9 @@ interface Lead {
   id: string;
   name: string;
   email: string;
-  phone: string | null;
+  phone: string;
+  address: string;
+  windowCount: string;
   message: string | null;
   createdAt: string;
   vehicle: {
@@ -360,16 +362,19 @@ export default function Dashboard() {
                         <span className="text-xs text-sand-400">{new Date(lead.createdAt).toLocaleDateString()}</span>
                       </div>
                       <div className="text-sm text-sand-500">
-                        {lead.email}{lead.phone ? ` | ${lead.phone}` : ''}
+                        {lead.email} | {lead.phone}
                       </div>
-                      <div className="text-xs text-sand-400 mt-1">
-                        {lead.vehicle.year} {lead.vehicle.make} {lead.vehicle.model} — DC: {lead.vehicle.consultant.name}
+                      <div className="text-sm text-sand-500 mt-0.5">
+                        {lead.address}
                       </div>
-                      {lead.message && (
-                        <div className="text-xs text-sand-500 mt-2 bg-white rounded-lg p-2 border border-sand-100">
-                          {lead.message}
-                        </div>
-                      )}
+                      <div className="flex items-center gap-3 mt-1">
+                        <span className="text-xs font-medium text-accent bg-accent/10 px-2 py-0.5 rounded-full">
+                          {lead.windowCount} windows
+                        </span>
+                        <span className="text-xs text-sand-400">
+                          {lead.vehicle.year} {lead.vehicle.make} {lead.vehicle.model} — DC: {lead.vehicle.consultant.name}
+                        </span>
+                      </div>
                     </div>
                   ))
                 )}

@@ -34,13 +34,15 @@ model Vehicle {
 }
 
 model Lead {
-  id        String   @id @default(cuid())
-  name      String
-  email     String
-  phone     String?
-  message   String?
-  vehicleId String
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  address     String
+  windowCount String
+  message     String?
+  vehicleId   String
+  createdAt   DateTime @default(now())
 
   vehicle Vehicle @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
 

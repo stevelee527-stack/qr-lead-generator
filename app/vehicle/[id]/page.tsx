@@ -2,7 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { QrCode, Car, User, Mail, Phone, MessageSquare, CheckCircle, Loader2 } from 'lucide-react';
+import {
+  Sun, EyeOff, PanelTop, Grip,
+  User, Mail, Phone, MessageSquare,
+  CheckCircle, Loader2, Shield, Star, Wrench,
+  ArrowDown, Sparkles
+} from 'lucide-react';
 
 interface VehicleInfo {
   id: string;
@@ -12,7 +17,36 @@ interface VehicleInfo {
   consultant: { name: string };
 }
 
-export default function VehicleLeadForm() {
+const SERVICES = [
+  {
+    icon: Grip,
+    title: 'Blinds',
+    description: 'Custom blinds in wood, faux wood, and aluminum. Perfect light control for any room.',
+  },
+  {
+    icon: Sun,
+    title: 'Shades',
+    description: 'Roller, cellular, and Roman shades. Elegant style with energy-efficient designs.',
+  },
+  {
+    icon: PanelTop,
+    title: 'Shutters',
+    description: 'Plantation and traditional shutters. Timeless elegance and lasting durability.',
+  },
+  {
+    icon: EyeOff,
+    title: 'Drapes',
+    description: 'Custom drapery panels and curtains. Luxurious fabrics tailored to your style.',
+  },
+];
+
+const TRUST_ITEMS = [
+  { icon: Star, title: 'Free Consultation', description: 'No-obligation in-home consultation' },
+  { icon: Wrench, title: 'Professional Install', description: 'Expert installation included' },
+  { icon: Shield, title: 'Satisfaction Guaranteed', description: 'We stand behind our work' },
+];
+
+export default function VehicleLandingPage() {
   const params = useParams();
   const vehicleId = params.id as string;
 
@@ -31,11 +65,11 @@ export default function VehicleLeadForm() {
   useEffect(() => {
     fetch(`/api/vehicles/${vehicleId}`)
       .then(res => {
-        if (!res.ok) throw new Error('Vehicle not found');
+        if (!res.ok) throw new Error('Not found');
         return res.json();
       })
       .then(data => { setVehicle(data); setLoading(false); })
-      .catch(() => { setError('Vehicle not found'); setLoading(false); });
+      .catch(() => { setError('Not found'); setLoading(false); });
   }, [vehicleId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -63,6 +97,11 @@ export default function VehicleLeadForm() {
     }
   };
 
+  const scrollToForm = () => {
+    document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Loading
   if (loading) {
     return (
       <div className="min-h-screen bg-sand-100 flex items-center justify-center">
@@ -71,54 +110,126 @@ export default function VehicleLeadForm() {
     );
   }
 
+  // Error
   if (error || !vehicle) {
     return (
       <div className="min-h-screen bg-sand-100 flex items-center justify-center px-4">
         <div className="card text-center max-w-md w-full">
-          <Car className="w-12 h-12 text-sand-300 mx-auto mb-4" />
-          <h1 className="text-xl font-bold text-sand-900 mb-2">Vehicle Not Found</h1>
-          <p className="text-sand-500">This vehicle listing is no longer available.</p>
+          <Sun className="w-12 h-12 text-sand-300 mx-auto mb-4" />
+          <h1 className="text-xl font-bold text-sand-900 mb-2">Page Not Found</h1>
+          <p className="text-sand-500">This page is no longer available.</p>
         </div>
       </div>
     );
   }
 
+  // Success
   if (submitted) {
     return (
       <div className="min-h-screen bg-sand-100 flex items-center justify-center px-4">
-        <div className="card text-center max-w-md w-full">
+        <div className="card text-center max-w-md w-full py-10">
           <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-emerald-500" />
           </div>
           <h1 className="text-2xl font-bold text-sand-900 mb-2">Thank You!</h1>
+          <p className="text-sand-500 mb-1">
+            Your request for a free quote has been submitted.
+          </p>
           <p className="text-sand-500">
-            Your inquiry about the {vehicle.year} {vehicle.make} {vehicle.model} has been submitted.
-            {vehicle.consultant.name} will be in touch with you shortly.
+            <span className="font-semibold text-sand-700">{vehicle.consultant.name}</span> will be in touch with you shortly to schedule your free consultation.
           </p>
         </div>
       </div>
     );
   }
 
+  // Main Landing Page
   return (
-    <div className="min-h-screen bg-sand-100 flex items-center justify-center px-4 py-8">
-      <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="flex flex-col items-center mb-6">
-          <div className="w-12 h-12 bg-sand-900 rounded-2xl flex items-center justify-center mb-4">
-            <QrCode className="w-6 h-6 text-white" />
-          </div>
-          <div className="flex items-center gap-2 bg-sand-200 rounded-full px-4 py-2 mb-3">
-            <Car className="w-4 h-4 text-sand-600" />
-            <span className="text-sm font-semibold text-sand-700">
-              {vehicle.year} {vehicle.make} {vehicle.model}
-            </span>
-          </div>
-          <h1 className="text-2xl font-bold text-sand-900 text-center">Interested in this vehicle?</h1>
-          <p className="text-sand-500 mt-1 text-center">Fill out the form below and {vehicle.consultant.name} will reach out to you.</p>
+    <div className="min-h-screen bg-sand-100">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-br from-sand-900 via-sand-800 to-warm-900 text-white overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-10 right-10 w-64 h-64 rounded-full bg-white blur-3xl" />
+          <div className="absolute bottom-10 left-10 w-48 h-48 rounded-full bg-accent-light blur-3xl" />
         </div>
 
-        {/* Form */}
+        <div className="relative px-6 py-16 sm:py-20 max-w-2xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-white/10">
+            <Sparkles className="w-4 h-4 text-amber-300" />
+            <span className="text-sm font-medium text-sand-100">Free In-Home Consultation</span>
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight mb-4">
+            Transform Your<br />
+            <span className="text-accent-light">Windows</span>
+          </h1>
+          <p className="text-sand-300 text-lg sm:text-xl leading-relaxed mb-8 max-w-md mx-auto">
+            Beautiful blinds, shades, shutters, and drapes — professionally measured and installed.
+          </p>
+
+          <button
+            onClick={scrollToForm}
+            className="inline-flex items-center gap-2 bg-white text-sand-900 px-8 py-4 rounded-2xl font-bold text-lg shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+          >
+            Get Your Free Quote
+            <ArrowDown className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+
+      {/* Services Section */}
+      <div className="px-6 py-14 max-w-4xl mx-auto">
+        <div className="text-center mb-10">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-sand-900 tracking-tight">Our Services</h2>
+          <p className="text-sand-500 mt-2">Custom window treatments for every style and budget</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {SERVICES.map(service => (
+            <div key={service.title} className="card-hover group cursor-default">
+              <div className="flex items-start gap-4">
+                <div className="w-11 h-11 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-accent/20 transition-colors">
+                  <service.icon className="w-5 h-5 text-accent" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-sand-900 mb-1">{service.title}</h3>
+                  <p className="text-sm text-sand-500 leading-relaxed">{service.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Why Choose Us */}
+      <div className="px-6 pb-14 max-w-4xl mx-auto">
+        <div className="bg-sand-200/50 rounded-3xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-sand-900 text-center mb-6">Why Choose Us</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+            {TRUST_ITEMS.map(item => (
+              <div key={item.title} className="text-center">
+                <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-soft">
+                  <item.icon className="w-5 h-5 text-accent" />
+                </div>
+                <h3 className="font-semibold text-sand-800 text-sm mb-1">{item.title}</h3>
+                <p className="text-xs text-sand-500">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Lead Form Section */}
+      <div id="quote-form" className="px-6 pb-16 max-w-lg mx-auto scroll-mt-4">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-sand-900 tracking-tight">Get Your Free Quote</h2>
+          <p className="text-sand-500 mt-2">
+            Fill out the form below and <span className="font-semibold text-sand-700">{vehicle.consultant.name}</span> will reach out to schedule your consultation.
+          </p>
+        </div>
+
         <div className="card">
           <form onSubmit={handleSubmit} className="space-y-4">
             {submitError && (
@@ -182,7 +293,7 @@ export default function VehicleLeadForm() {
 
             <div>
               <label htmlFor="message" className="block text-xs font-semibold text-sand-500 uppercase tracking-wider mb-2">
-                Message (optional)
+                Tell us about your project (optional)
               </label>
               <div className="relative">
                 <MessageSquare className="absolute left-4 top-3 w-4 h-4 text-sand-400" />
@@ -191,7 +302,7 @@ export default function VehicleLeadForm() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className="input-field pl-11 min-h-[80px] resize-none"
-                  placeholder="I'd like to know more about this vehicle..."
+                  placeholder="Number of windows, room types, style preferences..."
                   rows={3}
                 />
               </div>
@@ -200,22 +311,25 @@ export default function VehicleLeadForm() {
             <button
               type="submit"
               disabled={submitting}
-              className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
+              className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed text-lg py-4"
             >
               {submitting ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <Loader2 className="w-5 h-5 animate-spin" />
                   Submitting...
                 </>
               ) : (
-                'Get in Touch'
+                'Get My Free Quote'
               )}
             </button>
           </form>
         </div>
+      </div>
 
-        <p className="text-center text-xs text-sand-400 mt-6">
-          QR Lead Generator
+      {/* Footer */}
+      <div className="border-t border-sand-200 px-6 py-6 text-center">
+        <p className="text-xs text-sand-400">
+          Window Treatment Professionals
         </p>
       </div>
     </div>
